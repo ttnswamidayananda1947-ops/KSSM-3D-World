@@ -2,48 +2,300 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
 body{
     overflow:hidden;
     background:#000;
-    font-family:Arial, sans-serif;
+    touch-action:none;
 }
+
+/* Canvas */
 
 canvas{
     display:block;
 }
 
-#loading{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
+/* Loading Screen */
+
+#loadingScreen{
+    position:fixed;
+    inset:0;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    background:linear-gradient(
+        180deg,
+        #0d1117,
+        #161b22
+    );
+
     color:white;
-    font-size:30px;
-    font-weight:bold;
-    z-index:100;
-    animation:blink 1s infinite;
+
+    z-index:9999;
 }
 
-@keyframes blink{
-    50%{
-        opacity:0.3;
-    }
+#loadingScreen h1{
+    font-size:40px;
+    color:#00ff88;
+    margin-bottom:10px;
 }
+
+#loadingScreen p{
+    font-size:18px;
+    opacity:0.8;
+}
+
+/* HUD */
 
 #hud{
-    position:absolute;
-    top:15px;
-    left:15px;
-    color:white;
-    z-index:10;
-    background:rgba(0,0,0,0.5);
-    padding:10px;
-    border-radius:10px;
+    position:fixed;
+
+    top:10px;
+    left:10px;
+
+    z-index:500;
+
+    display:flex;
+    flex-direction:column;
+    gap:10px;
 }
 
-#hud h2{
-    color:lime;
-    margin-bottom:5px;
+#healthBox,
+#coinBox{
+    background:rgba(0,0,0,0.5);
+
+    color:white;
+
+    padding:10px 15px;
+
+    border-radius:12px;
+
+    border:2px solid rgba(
+        255,
+        255,
+        255,
+        0.2
+    );
+
+    backdrop-filter:blur(10px);
 }
+
+/* Mission Panel */
+
+#missionPanel{
+    position:fixed;
+
+    top:10px;
+    right:10px;
+
+    width:220px;
+
+    background:rgba(0,0,0,0.55);
+
+    color:white;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    z-index:500;
+
+    backdrop-filter:blur(10px);
+}
+
+#missionPanel h3{
+    color:#00ff88;
+    margin-bottom:10px;
+}
+
+#missionPanel p{
+    line-height:1.5;
+}
+
+/* Joystick */
+
+#joystickBase{
+    position:fixed;
+
+    left:20px;
+    bottom:20px;
+
+    width:140px;
+    height:140px;
+
+    border-radius:50%;
+
+    background:rgba(
+        255,
+        255,
+        255,
+        0.15
+    );
+
+    border:3px solid rgba(
+        255,
+        255,
+        255,
+        0.4
+    );
+
+    z-index:999;
+
+    touch-action:none;
+}
+
+#joystickStick{
+    position:absolute;
+
+    width:60px;
+    height:60px;
+
+    left:40px;
+    top:40px;
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
+    0 0 20px white;
+}
+
+/* Buttons */
+
+#buttonArea{
+    position:fixed;
+
+    right:20px;
+    bottom:20px;
+
+    z-index:999;
+}
+
+#jumpBtn{
+    position:absolute;
+
+    right:0;
+    bottom:0;
+
+    width:95px;
+    height:95px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#ffaa00;
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    box-shadow:
+    0 0 20px #ffaa00;
+}
+
+#attackBtn{
+    position:absolute;
+
+    right:110px;
+    bottom:80px;
+
+    width:85px;
+    height:85px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#ff3333;
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    box-shadow:
+    0 0 20px red;
+}
+
+/* Button Press Effect */
+
+#jumpBtn:active,
+#attackBtn:active{
+    transform:scale(0.9);
+}
+
+/* Game Over */
+
+#gameOver{
+    position:fixed;
+    inset:0;
+
+    display:none;
+
+    flex-direction:column;
+
+    justify-content:center;
+    align-items:center;
+
+    background:rgba(
+        0,
+        0,
+        0,
+        0.9
+    );
+
+    color:white;
+
+    z-index:99999;
+}
+
+#gameOver h1{
+    font-size:60px;
+    color:red;
+    margin-bottom:20px;
+}
+
+#restartBtn{
+    padding:15px 35px;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    background:#00ff88;
+
+    color:black;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    #missionPanel{
+        width:180px;
+        font-size:14px;
+    }
+
+    #healthBox,
+    #coinBox{
+        font-size:14px;
+    }
+
+    #loadingScreen h1{
+        font-size:28px;
+    }
+    }
