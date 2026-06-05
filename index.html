@@ -1,61 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ta">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Siren Head: The Train Escape 3D</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siren Head Horror Game</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+        }
+        #instructions {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        #crosshair {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
-
-    <!-- Blocker / Start Screen -->
-    <div id="blocker">
-        <div id="instructions">
-            <h1>SIREN HEAD: THE TRAIN ESCAPE</h1>
-            <p class="tap-text">TAP TO START GAME</p>
-            <p class="controls-text">
-                CONTROLS:<br>
-                Left Joystick: Move | Right Screen: Look Around<br>
-                Right Button: Shoot | Top Button: Flashlight Toggle
-            </p>
-        </div>
+    <div id="instructions">
+        <h2>Siren Head: Survival</h2>
+        <p>Click to Start</p>
+        <p>W, A, S, D = Move | Mouse = Look Around</p>
+        <p>Find the Radio Tower to Escape!</p>
     </div>
+    <div id="crosshair"></div>
 
-    <!-- Orientation Blocker for Mobile Landscape -->
-    <div id="orientation-blocker">
-        <div class="message">
-            <h2>PLEASE ROTATE YOUR DEVICE</h2>
-            <p>This game requires Landscape Mode to play properly.</p>
-            <div class="phone-icon">🔄</div>
-        </div>
-    </div>
-
-    <!-- Top Flashlight Toggle Button -->
-    <div id="flashlight-btn" class="ui-button">
-        <span class="icon">🔦</span> <span class="text">FLASHLIGHT: ON</span>
-    </div>
-
-    <!-- Mobile On-Screen Controls UI -->
-    <div id="mobile-ui">
-        <!-- Left Side Dynamic Joystick Area -->
-        <div id="joystick-zone">
-            <div id="joystick-base">
-                <div id="joystick-stick"></div>
-            </div>
-        </div>
-
-        <!-- Right Side Action Controls -->
-        <div id="action-zone">
-            <div id="shoot-btn" class="action-button">SHOOT</div>
-        </div>
-    </div>
-
-    <!-- Game Canvas -->
-    <canvas id="gameCanvas"></canvas>
-
-    <!-- CDN Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="game.js"></script>
+    <!-- Importmap for Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.158.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
+            }
+        }
+    </script>
+    
+    <!-- Main Game Logic -->
+    <script type="module" src="game.js"></script>
 </body>
 </html>
