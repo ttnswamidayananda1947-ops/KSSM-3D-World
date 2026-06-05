@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KSSM 3D World</title>
+
+<title>KSSM Hero Adventure</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -16,18 +17,83 @@
   }
 }
 </script>
-</head>
 
+</head>
 <body>
 
-<div id="loading">
-    KSSM 3D WORLD
+<!-- Loading Screen -->
+
+<div id="loadingScreen">
+
+    <h1>KSSM HERO ADVENTURE</h1>
+
+    <p>Loading World...</p>
+
 </div>
 
+<!-- HUD -->
+
 <div id="hud">
-    <h2>KSSM 3D WORLD</h2>
-    <p>W A S D = Move</p>
+
+    <div id="healthBox">
+        ❤️ Health :
+        <span id="healthText">100</span>
+    </div>
+
+    <div id="coinBox">
+        🪙 Coins :
+        <span id="coinText">0</span>
+    </div>
+
 </div>
+
+<!-- Mission Panel -->
+
+<div id="missionPanel">
+
+    <h3>Mission</h3>
+
+    <p>
+        Collect Coins And Explore The World
+    </p>
+
+</div>
+
+<!-- Mobile Joystick -->
+
+<div id="joystickBase">
+
+    <div id="joystickStick"></div>
+
+</div>
+
+<!-- Buttons -->
+
+<div id="buttonArea">
+
+    <button id="jumpBtn">
+        JUMP
+    </button>
+
+    <button id="attackBtn">
+        HIT
+    </button>
+
+</div>
+
+<!-- Game Over -->
+
+<div id="gameOver">
+
+    <h1>GAME OVER</h1>
+
+    <button id="restartBtn">
+        Restart
+    </button>
+
+</div>
+
+<!-- Script -->
 
 <script type="module" src="script.js"></script>
 
