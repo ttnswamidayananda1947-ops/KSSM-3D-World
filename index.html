@@ -2,50 +2,48 @@
 <html lang="ta">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>KSSM Hero Adventure - Horror Edition</title>
+    <!-- பயனர் ஜூம் செய்வதை முழுமையாகத் தடுக்க user-scalable=no சேர்க்கப்பட்டுள்ளது -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Siren Head: The Train Escape 3D</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-    <div id="game-container"></div>
 
-    <div id="hud">
-        <div class="hud-panel left-panel">
-            <div class="hud-item"><span class="label">உயிர் (HEALTH):</span> <div class="bar-container"><div id="health-bar"></div></div></div>
-            <div class="hud-item"><span class="label">ஆன்மாக்கள் (SOULS):</span> <span id="coin-count" class="value">0</span> / 10</div>
-        </div>
-        <div class="hud-panel right-panel">
-            <div class="hud-item"><span class="label">மதிப்பெண் (SCORE):</span> <span id="score-value" class="value">0</span></div>
-            <div id="mission-status" class="mission-active">லட்சியம்: 10 ஆன்மாக்களைச் சேகரித்து பேய்களை அழிக்கவும்!</div>
-        </div>
-    </div>
-
-    <div id="controls-container">
-        <div id="joystick-wrapper">
-            <div id="joystick-boundary">
-                <div id="joystick-knob"></div>
-            </div>
-        </div>
-
-        <div id="action-buttons">
-            <button id="btn-attack" class="game-btn">தாக்கு (ATTACK)</button>
-            <button id="btn-jump" class="game-btn">குதி (JUMP)</button>
+    <!-- கேம் தொடங்குவதற்கும் பாயிண்டர் லாக் செய்வதற்கும் ஆன UI -->
+    <div id="blocker">
+        <div id="instructions">
+            <h1 style="font-size: 30px; color: #ff0000; text-shadow: 0 0 10px #000;">SIREN HEAD: THE TRAIN ESCAPE</h1>
+            <p style="font-size: 18px;">விளையாட ஸ்கிரீனை கிளிக் செய்யவும்</p>
+            <p style="font-size: 14px; color: #aaa;">
+                கண்ட்ரோல்ஸ்:<br>
+                Move: W, A, S, D | Look: Mouse / Touch Move<br>
+                Task: ரயிலை சுற்றியுள்ள டாஸ்க்குகளை முடிக்கவும்!
+            </p>
         </div>
     </div>
 
-    <div id="overlay" class="overlay-visible">
-        <div class="overlay-content">
-            <h1 id="overlay-title">KSSM HERO ADVENTURE</h1>
-            <p id="overlay-subtitle" style="color: #ff3333; font-weight: bold; letter-spacing: 2px;">இருண்ட உலகம் உங்களை அழைக்கிறது...</p>
-            <div id="game-stats" class="hidden">
-                <p>சேகரித்த ஆன்மாக்கள்: <span id="final-coins">0</span></p>
-                <p>இறுதி மதிப்பெண்: <span id="final-score">0</span></p>
-            </div>
-            <button id="btn-start">விளையாட்டைத் தொடங்கு (START GAME)</button>
+    <!-- லேண்ட்ஸ்கேப் மோடு கட்டாயப்படுத்துவதற்கான அலர்ட் ஸ்கிரீன் -->
+    <div id="orientation-blocker">
+        <div class="message">
+            <h2>தயவுசெய்து உங்கள் போனை திருப்பவும்!</h2>
+            <p>இந்த கேம் லேண்ட்ஸ்கேப் (Landscape) மோடில் மட்டுமே வேலை செய்யும்.</p>
+            <div class="phone-icon">🔄</div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- 3D கேன்வாஸ் (இங்குதான் த்ரீ ஜேஎஸ் உலகம் தெரியும்) -->
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- Three.js முதன்மை CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- First Person கண்ட்ரோலுக்கான PointerLockControls CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/PointerLockControls.js"></script>
+    
+    <!-- 3D மாடல்களை (Train, Siren Head) லோடு செய்ய GLTFLoader CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+
+    <!-- நமது கேம் லாஜிக் கோப்பு -->
+    <script src="game.js"></script>
 </body>
 </html>
