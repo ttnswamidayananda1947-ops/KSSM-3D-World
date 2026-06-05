@@ -1,101 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ta">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>KSSM Hero Adventure</title>
-
-<link rel="stylesheet" href="style.css">
-
-<script async src="https://unpkg.com/es-module-shims@1.10.0/dist/es-module-shims.js"></script>
-
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://unpkg.com/three@0.179.1/build/three.module.js"
-  }
-}
-</script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KSSM Hero Adventure - Horror Edition</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
+    <div id="game-container"></div>
 
-<!-- Loading Screen -->
-
-<div id="loadingScreen">
-
-    <h1>KSSM HERO ADVENTURE</h1>
-
-    <p>Loading World...</p>
-
-</div>
-
-<!-- HUD -->
-
-<div id="hud">
-
-    <div id="healthBox">
-        ❤️ Health :
-        <span id="healthText">100</span>
+    <div id="hud">
+        <div class="hud-panel left-panel">
+            <div class="hud-item"><span class="label">உயிர் (HEALTH):</span> <div class="bar-container"><div id="health-bar"></div></div></div>
+            <div class="hud-item"><span class="label">ஆன்மாக்கள் (SOULS):</span> <span id="coin-count" class="value">0</span> / 10</div>
+        </div>
+        <div class="hud-panel right-panel">
+            <div class="hud-item"><span class="label">மதிப்பெண் (SCORE):</span> <span id="score-value" class="value">0</span></div>
+            <div id="mission-status" class="mission-active">லட்சியம்: 10 ஆன்மாக்களைச் சேகரித்து பேய்களை அழிக்கவும்!</div>
+        </div>
     </div>
 
-    <div id="coinBox">
-        🪙 Coins :
-        <span id="coinText">0</span>
+    <div id="controls-container">
+        <div id="joystick-wrapper">
+            <div id="joystick-boundary">
+                <div id="joystick-knob"></div>
+            </div>
+        </div>
+
+        <div id="action-buttons">
+            <button id="btn-attack" class="game-btn">தாக்கு (ATTACK)</button>
+            <button id="btn-jump" class="game-btn">குதி (JUMP)</button>
+        </div>
     </div>
 
-</div>
+    <div id="overlay" class="overlay-visible">
+        <div class="overlay-content">
+            <h1 id="overlay-title">KSSM HERO ADVENTURE</h1>
+            <p id="overlay-subtitle" style="color: #ff3333; font-weight: bold; letter-spacing: 2px;">இருண்ட உலகம் உங்களை அழைக்கிறது...</p>
+            <div id="game-stats" class="hidden">
+                <p>சேகரித்த ஆன்மாக்கள்: <span id="final-coins">0</span></p>
+                <p>இறுதி மதிப்பெண்: <span id="final-score">0</span></p>
+            </div>
+            <button id="btn-start">விளையாட்டைத் தொடங்கு (START GAME)</button>
+        </div>
+    </div>
 
-<!-- Mission Panel -->
-
-<div id="missionPanel">
-
-    <h3>Mission</h3>
-
-    <p>
-        Collect Coins And Explore The World
-    </p>
-
-</div>
-
-<!-- Mobile Joystick -->
-
-<div id="joystickBase">
-
-    <div id="joystickStick"></div>
-
-</div>
-
-<!-- Buttons -->
-
-<div id="buttonArea">
-
-    <button id="jumpBtn">
-        JUMP
-    </button>
-
-    <button id="attackBtn">
-        HIT
-    </button>
-
-</div>
-
-<!-- Game Over -->
-
-<div id="gameOver">
-
-    <h1>GAME OVER</h1>
-
-    <button id="restartBtn">
-        Restart
-    </button>
-
-</div>
-
-<!-- Script -->
-
-<script type="module" src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>
