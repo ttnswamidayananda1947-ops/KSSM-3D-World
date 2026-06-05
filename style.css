@@ -1,11 +1,12 @@
-/* அடிப்படை அமைப்புகள் */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    /* டெக்ஸ்ட் செலக்ட் ஆவதையும் டபுள் டேப் ஜூம் ஆவதையும் தடுக்கிறது */
     user-select: none;
     -webkit-user-select: none;
+    /* மொபைலில் தொடும்போது ப்ளூ கலர் மார்க் வராமல் தடுக்கிறது */
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
     touch-action: none; 
 }
 
@@ -13,41 +14,155 @@ body, html {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-color: #050505;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #000;
+    font-family: 'Arial', sans-serif;
 }
 
-/* 3D கேன்வாஸ் */
 #gameCanvas {
     width: 100%;
     height: 100%;
     display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
 }
 
-/* கேம் தொடங்கும் முன் வரும் பிளாக்கர் ஸ்கிரீன் */
+/* Blocker Screen */
 #blocker {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.85);
+    background-color: rgba(0, 0, 0, 0.9);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 10;
+    z-index: 100;
     cursor: pointer;
 }
 
 #instructions {
-    width: 100%;
     text-align: center;
-    color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 20px;
+    color: #fff;
 }
 
-/* லேண்ட்ஸ்கேப் மோடு செக்கர் (Default ஆக மறைக்கப்பட்டிருக்கும்) */
+#instructions h1 {
+    font-size: 32px;
+    color: #ff0000;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(255,0,0,0.5);
+}
+
+.tap-text {
+    font-size: 20px;
+    color: #fff;
+    animation: blink 1.5s infinite;
+    margin-bottom: 20px;
+}
+
+.controls-text {
+    font-size: 14px;
+    color: #888;
+    line-height: 1.6;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* Top Flashlight Button */
+#flashlight-btn {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.3);
+    font-size: 14px;
+    font-weight: bold;
+    display: none; /* கேம் தொடங்கியவுடன் ஜாவாஸ்கிரிப்ட் மூலம் காண்பிக்கப்படும் */
+    align-items: center;
+    gap: 5px;
+}
+
+/* Mobile UI Overlay */
+#mobile-ui {
+    display: none; /* கேம் தொடங்கியவுடன் காண்பிக்கப்படும் */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none; /* 3D கேமரா சுழல ஏதுவாக */
+}
+
+/* Left Side Joystick System */
+#joystick-zone {
+    position: absolute;
+    bottom: 20px;
+    left: 30px;
+    width: 120px;
+    height: 120px;
+    pointer-events: auto;
+}
+
+#joystick-base {
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#joystick-stick {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    position: absolute;
+    transition: transform 0.05s ease;
+}
+
+/* Right Side Shoot Button */
+#action-zone {
+    position: absolute;
+    bottom: 30px;
+    right: 40px;
+    pointer-events: auto;
+}
+
+.action-button {
+    width: 75px;
+    height: 75px;
+    background: rgba(255, 0, 0, 0.3);
+    border: 2px solid #ff0000;
+    border-radius: 50%;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(255,0,0,0.3);
+}
+
+.action-button:active {
+    background: rgba(255, 0, 0, 0.6);
+    transform: scale(0.95);
+}
+
+/* Orientation Check */
 #orientation-blocker {
     display: none;
     position: fixed;
@@ -55,7 +170,7 @@ body, html {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: #111;
+    background: #000;
     color: white;
     z-index: 9999;
     justify-content: center;
@@ -63,32 +178,7 @@ body, html {
     text-align: center;
 }
 
-#orientation-blocker .message {
-    padding: 20px;
-}
-
-#orientation-blocker h2 {
-    color: #ff3333;
-    margin-bottom: 10px;
-}
-
-.phone-icon {
-    font-size: 50px;
-    margin-top: 20px;
-    animation: rotate 2s infinite linear;
-}
-
-@keyframes rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(-90deg); }
-}
-
-/* போன் போர்ட்ரெய்ட் (நெடுங்குத்து) வடிவில் இருந்தால் மட்டும் அலர்ட்டை காட்டு */
 @media screen and (orientation: portrait) {
-    #orientation-blocker {
-        display: flex;
-    }
-    #blocker {
-        display: none !important;
-    }
+    #orientation-blocker { display: flex; }
+    #blocker, #mobile-ui, #flashlight-btn { display: none !important; }
 }
