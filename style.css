@@ -1,305 +1,94 @@
+/* அடிப்படை அமைப்புகள் */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    /* டெக்ஸ்ட் செலக்ட் ஆவதையும் டபுள் டேப் ஜூம் ஆவதையும் தடுக்கிறது */
     user-select: none;
     -webkit-user-select: none;
-    touch-action: none;
+    touch-action: none; 
 }
 
 body, html {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-color: #05050a;
+    background-color: #050505;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-#game-container {
+/* 3D கேன்வாஸ் */
+#gameCanvas {
     width: 100%;
     height: 100%;
+    display: block;
+}
+
+/* கேம் தொடங்கும் முன் வரும் பிளாக்கர் ஸ்கிரீன் */
+#blocker {
     position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-}
-
-#hud {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 15px;
-    z-index: 10;
-    pointer-events: none;
-    display: flex;
-    justify-content: space-between;
-    color: #fff;
-    text-shadow: 2px 2px 4px #000;
-}
-
-.hud-panel {
-    background: rgba(10, 10, 20, 0.75);
-    padding: 12px 20px;
-    border-radius: 8px;
-    border: 1px solid #331111;
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
-}
-
-.hud-item {
-    margin-bottom: 8px;
-    font-size: 14px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.hud-item:last-child {
-    margin-bottom: 0;
-}
-
-.label {
-    color: #b0b0b0;
-}
-
-.value {
-    color: #ff3333;
-    font-size: 16px;
-}
-
-.bar-container {
-    width: 120px;
-    height: 14px;
-    background-color: #222;
-    border: 1px solid #555;
-    border-radius: 3px;
-    overflow: hidden;
-    display: inline-block;
-}
-
-#health-bar {
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, #aa0000, #ff3333);
-    transition: width 0.2s ease;
-}
-
-#mission-status {
-    font-size: 12px;
-    color: #ffaa00;
-    margin-top: 5px;
-    border-top: 1px solid #444;
-    padding-top: 5px;
-}
-
-#controls-container {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 200px;
-    z-index: 10;
-    pointer-events: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 30px 30px 30px;
-}
-
-#joystick-wrapper {
-    pointer-events: auto;
-    width: 130px;
-    height: 130px;
+    background-color: rgba(0,0,0,0.85);
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-#joystick-boundary {
-    width: 120px;
-    height: 120px;
-    background: rgba(20, 20, 30, 0.6);
-    border: 3px solid #ff3333;
-    border-radius: 50%;
-    position: relative;
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
-}
-
-#joystick-knob {
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(135deg, #441111, #aa0000);
-    border: 2px solid #ff6666;
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-}
-
-#action-buttons {
-    pointer-events: auto;
-    display: flex;
-    gap: 20px;
-    align-items: center;
-}
-
-.game-btn {
-    width: 75px;
-    height: 75px;
-    border-radius: 50%;
-    border: 2px solid #ff3333;
-    font-weight: bold;
-    font-size: 12px;
-    color: white;
-    text-shadow: 1px 1px 2px #000;
-    outline: none;
+    z-index: 10;
     cursor: pointer;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.5);
-    transition: transform 0.1s, background 0.2s;
 }
 
-#btn-attack {
-    background: linear-gradient(135deg, #660000, #cc0000);
+#instructions {
+    width: 100%;
+    text-align: center;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
 }
 
-#btn-jump {
-    background: linear-gradient(135deg, #112244, #2255aa);
-    border-color: #3388ff;
-    width: 65px;
-    height: 65px;
-    margin-bottom: 20px;
-}
-
-.game-btn:active {
-    transform: scale(0.9);
-    filter: brightness(1.2);
-}
-
-#overlay {
-    position: absolute;
+/* லேண்ட்ஸ்கேப் மோடு செக்கர் (Default ஆக மறைக்கப்பட்டிருக்கும்) */
+#orientation-blocker {
+    display: none;
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(5, 5, 10, 0.95);
-    z-index: 100;
-    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background: #111;
+    color: white;
+    z-index: 9999;
     justify-content: center;
     align-items: center;
-    transition: opacity 0.5s ease;
-}
-
-.overlay-visible {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.overlay-hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.overlay-content {
     text-align: center;
-    color: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    background: rgba(15, 5, 5, 0.85);
-    border: 2px solid #551111;
-    box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
-    max-width: 400px;
-    width: 90%;
 }
 
-.overlay-content h1 {
-    font-size: 28px;
+#orientation-blocker .message {
+    padding: 20px;
+}
+
+#orientation-blocker h2 {
     color: #ff3333;
     margin-bottom: 10px;
-    letter-spacing: 3px;
-    text-shadow: 0 0 10px rgba(255,0,0,0.6);
 }
 
-.overlay-content p {
-    margin-bottom: 20px;
-    font-size: 15px;
-    color: #ccc;
+.phone-icon {
+    font-size: 50px;
+    margin-top: 20px;
+    animation: rotate 2s infinite linear;
 }
 
-#game-stats {
-    background: rgba(0, 0, 0, 0.4);
-    padding: 15px;
-    border-radius: 6px;
-    margin-bottom: 25px;
-    border: 1px dashed #444;
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-90deg); }
 }
 
-#game-stats p {
-    margin-bottom: 8px;
-    font-size: 16px;
+/* போன் போர்ட்ரெய்ட் (நெடுங்குத்து) வடிவில் இருந்தால் மட்டும் அலர்ட்டை காட்டு */
+@media screen and (orientation: portrait) {
+    #orientation-blocker {
+        display: flex;
+    }
+    #blocker {
+        display: none !important;
+    }
 }
-
-#game-stats p:last-child {
-    margin-bottom: 0;
-}
-
-#btn-start {
-    background: linear-gradient(180deg, #aa0000, #550000);
-    color: #fff;
-    border: 2px solid #ff6666;
-    padding: 12px 30px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 25px;
-    cursor: pointer;
-    letter-spacing: 1px;
-    box-shadow: 0 4px 15px rgba(255,0,0,0.4);
-    transition: all 0.2s;
-    width: 100%;
-}
-
-#btn-start:hover, #btn-start:active {
-    background: linear-gradient(180deg, #ff3333, #aa0000);
-    box-shadow: 0 4px 25px rgba(255,0,0,0.7);
-    transform: translateY(-2px);
-}
-
-.hidden {
-    display: none;
-}
-
-@media (max-width: 600px) {
-    #controls-container {
-        padding: 0 15px 15px 15px;
-        height: 160px;
-    }
-    #joystick-boundary {
-        width: 100px;
-        height: 100px;
-    }
-    #joystick-knob {
-        width: 42px;
-        height: 42px;
-    }
-    .game-btn {
-        width: 65px;
-        height: 65px;
-        font-size: 11px;
-    }
-    #btn-jump {
-        width: 55px;
-        height: 55px;
-    }
-    .hud-panel {
-        padding: 8px 12px;
-    }
-    .hud-item {
-        font-size: 12px;
-    }
-    .bar-container {
-        width: 80px;
-    }
-    }
