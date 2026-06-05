@@ -1,301 +1,305 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
 }
 
-body{
-    overflow:hidden;
-    background:#000;
-    touch-action:none;
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #05050a;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Canvas */
-
-canvas{
-    display:block;
+#game-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
 }
 
-/* Loading Screen */
-
-#loadingScreen{
-    position:fixed;
-    inset:0;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-
-    background:linear-gradient(
-        180deg,
-        #0d1117,
-        #161b22
-    );
-
-    color:white;
-
-    z-index:9999;
+#hud {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px;
+    z-index: 10;
+    pointer-events: none;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    text-shadow: 2px 2px 4px #000;
 }
 
-#loadingScreen h1{
-    font-size:40px;
-    color:#00ff88;
-    margin-bottom:10px;
+.hud-panel {
+    background: rgba(10, 10, 20, 0.75);
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 1px solid #331111;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
 }
 
-#loadingScreen p{
-    font-size:18px;
-    opacity:0.8;
+.hud-item {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-/* HUD */
-
-#hud{
-    position:fixed;
-
-    top:10px;
-    left:10px;
-
-    z-index:500;
-
-    display:flex;
-    flex-direction:column;
-    gap:10px;
+.hud-item:last-child {
+    margin-bottom: 0;
 }
 
-#healthBox,
-#coinBox{
-    background:rgba(0,0,0,0.5);
-
-    color:white;
-
-    padding:10px 15px;
-
-    border-radius:12px;
-
-    border:2px solid rgba(
-        255,
-        255,
-        255,
-        0.2
-    );
-
-    backdrop-filter:blur(10px);
+.label {
+    color: #b0b0b0;
 }
 
-/* Mission Panel */
-
-#missionPanel{
-    position:fixed;
-
-    top:10px;
-    right:10px;
-
-    width:220px;
-
-    background:rgba(0,0,0,0.55);
-
-    color:white;
-
-    padding:15px;
-
-    border-radius:12px;
-
-    z-index:500;
-
-    backdrop-filter:blur(10px);
+.value {
+    color: #ff3333;
+    font-size: 16px;
 }
 
-#missionPanel h3{
-    color:#00ff88;
-    margin-bottom:10px;
+.bar-container {
+    width: 120px;
+    height: 14px;
+    background-color: #222;
+    border: 1px solid #555;
+    border-radius: 3px;
+    overflow: hidden;
+    display: inline-block;
 }
 
-#missionPanel p{
-    line-height:1.5;
+#health-bar {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #aa0000, #ff3333);
+    transition: width 0.2s ease;
 }
 
-/* Joystick */
-
-#joystickBase{
-    position:fixed;
-
-    left:20px;
-    bottom:20px;
-
-    width:140px;
-    height:140px;
-
-    border-radius:50%;
-
-    background:rgba(
-        255,
-        255,
-        255,
-        0.15
-    );
-
-    border:3px solid rgba(
-        255,
-        255,
-        255,
-        0.4
-    );
-
-    z-index:999;
-
-    touch-action:none;
+#mission-status {
+    font-size: 12px;
+    color: #ffaa00;
+    margin-top: 5px;
+    border-top: 1px solid #444;
+    padding-top: 5px;
 }
 
-#joystickStick{
-    position:absolute;
-
-    width:60px;
-    height:60px;
-
-    left:40px;
-    top:40px;
-
-    border-radius:50%;
-
-    background:white;
-
-    box-shadow:
-    0 0 20px white;
+#controls-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    z-index: 10;
+    pointer-events: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px 30px 30px;
 }
 
-/* Buttons */
-
-#buttonArea{
-    position:fixed;
-
-    right:20px;
-    bottom:20px;
-
-    z-index:999;
+#joystick-wrapper {
+    pointer-events: auto;
+    width: 130px;
+    height: 130px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#jumpBtn{
-    position:absolute;
-
-    right:0;
-    bottom:0;
-
-    width:95px;
-    height:95px;
-
-    border:none;
-
-    border-radius:50%;
-
-    background:#ffaa00;
-
-    color:white;
-
-    font-size:18px;
-
-    font-weight:bold;
-
-    box-shadow:
-    0 0 20px #ffaa00;
+#joystick-boundary {
+    width: 120px;
+    height: 120px;
+    background: rgba(20, 20, 30, 0.6);
+    border: 3px solid #ff3333;
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
 }
 
-#attackBtn{
-    position:absolute;
-
-    right:110px;
-    bottom:80px;
-
-    width:85px;
-    height:85px;
-
-    border:none;
-
-    border-radius:50%;
-
-    background:#ff3333;
-
-    color:white;
-
-    font-size:18px;
-
-    font-weight:bold;
-
-    box-shadow:
-    0 0 20px red;
+#joystick-knob {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #441111, #aa0000);
+    border: 2px solid #ff6666;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
 }
 
-/* Button Press Effect */
-
-#jumpBtn:active,
-#attackBtn:active{
-    transform:scale(0.9);
+#action-buttons {
+    pointer-events: auto;
+    display: flex;
+    gap: 20px;
+    align-items: center;
 }
 
-/* Game Over */
-
-#gameOver{
-    position:fixed;
-    inset:0;
-
-    display:none;
-
-    flex-direction:column;
-
-    justify-content:center;
-    align-items:center;
-
-    background:rgba(
-        0,
-        0,
-        0,
-        0.9
-    );
-
-    color:white;
-
-    z-index:99999;
+.game-btn {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    border: 2px solid #ff3333;
+    font-weight: bold;
+    font-size: 12px;
+    color: white;
+    text-shadow: 1px 1px 2px #000;
+    outline: none;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+    transition: transform 0.1s, background 0.2s;
 }
 
-#gameOver h1{
-    font-size:60px;
-    color:red;
-    margin-bottom:20px;
+#btn-attack {
+    background: linear-gradient(135deg, #660000, #cc0000);
 }
 
-#restartBtn{
-    padding:15px 35px;
-
-    border:none;
-
-    border-radius:10px;
-
-    font-size:20px;
-
-    font-weight:bold;
-
-    background:#00ff88;
-
-    color:black;
+#btn-jump {
+    background: linear-gradient(135deg, #112244, #2255aa);
+    border-color: #3388ff;
+    width: 65px;
+    height: 65px;
+    margin-bottom: 20px;
 }
 
-/* Mobile */
+.game-btn:active {
+    transform: scale(0.9);
+    filter: brightness(1.2);
+}
 
-@media(max-width:768px){
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 5, 10, 0.95);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+}
 
-    #missionPanel{
-        width:180px;
-        font-size:14px;
+.overlay-visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.overlay-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.overlay-content {
+    text-align: center;
+    color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    background: rgba(15, 5, 5, 0.85);
+    border: 2px solid #551111;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+    max-width: 400px;
+    width: 90%;
+}
+
+.overlay-content h1 {
+    font-size: 28px;
+    color: #ff3333;
+    margin-bottom: 10px;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px rgba(255,0,0,0.6);
+}
+
+.overlay-content p {
+    margin-bottom: 20px;
+    font-size: 15px;
+    color: #ccc;
+}
+
+#game-stats {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 25px;
+    border: 1px dashed #444;
+}
+
+#game-stats p {
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+#game-stats p:last-child {
+    margin-bottom: 0;
+}
+
+#btn-start {
+    background: linear-gradient(180deg, #aa0000, #550000);
+    color: #fff;
+    border: 2px solid #ff6666;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(255,0,0,0.4);
+    transition: all 0.2s;
+    width: 100%;
+}
+
+#btn-start:hover, #btn-start:active {
+    background: linear-gradient(180deg, #ff3333, #aa0000);
+    box-shadow: 0 4px 25px rgba(255,0,0,0.7);
+    transform: translateY(-2px);
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    #controls-container {
+        padding: 0 15px 15px 15px;
+        height: 160px;
     }
-
-    #healthBox,
-    #coinBox{
-        font-size:14px;
+    #joystick-boundary {
+        width: 100px;
+        height: 100px;
     }
-
-    #loadingScreen h1{
-        font-size:28px;
+    #joystick-knob {
+        width: 42px;
+        height: 42px;
+    }
+    .game-btn {
+        width: 65px;
+        height: 65px;
+        font-size: 11px;
+    }
+    #btn-jump {
+        width: 55px;
+        height: 55px;
+    }
+    .hud-panel {
+        padding: 8px 12px;
+    }
+    .hud-item {
+        font-size: 12px;
+    }
+    .bar-container {
+        width: 80px;
     }
     }
